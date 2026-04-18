@@ -20,11 +20,14 @@ RUN npm run build
 ############################
 FROM nginxinc/nginx-unprivileged:stable-alpine AS runtime
 
+# Elevate to root only for image filesystem setup
+USER root
+
 # Remove default static files
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy built Astro output
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder --chown=101:0 /app/dist/ /usr/share/nginx/html/
 
 # Hardened Nginx config:
 # - non-root port
@@ -63,6 +66,9 @@ RUN printf '%s\n' \
 '  }' \
 '}' \
 > /etc/nginx/conf.d/default.conf
+
+# Drop privileges for runtime
+USER 101
 
 EXPOSE 8080
 
