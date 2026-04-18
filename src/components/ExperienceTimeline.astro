@@ -1,0 +1,243 @@
+---
+import type { ExperienceItem } from "../data/profile";
+
+interface Props {
+  items?: ExperienceItem[];
+  heading?: string;
+  id?: string;
+}
+
+const { items = [], heading = "Experience", id = "experience" } = Astro.props;
+
+const formatter = new Intl.DateTimeFormat("en", {
+  month: "short",
+  year: "numeric",
+});
+
+const toIsoDate = (value: string) => `${value}-01`;
+
+const formatMonthYear = (value: string) => {
+  const date = new Date(toIsoDate(value));
+  return Number.isNaN(date.getTime()) ? value : formatter.format(date);
+};
+
+const monthsBetween = (start: string, end: string) => {
+  const [sy, sm] = start.split("-").map((v) => Number(v));
+  const [ey, em] = end.split("-").map((v) => Number(v));
+
+  if ([sy, sm, ey, em].some((v) => Number.isNaN(v))) return null;
+
+  return Math.max(0, ey * 12 + em - (sy * 12 + sm) + 1);
+};
+
+const formatDuration = (start: string, end: string | "Present") => {
+  const endValue =
+    end === "Present"
+      ? `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}`
+      : end;
+
+  const totalMonths = monthsBetween(start, endValue);
+  if (totalMonths === null) return "";
+
+  const years = Math.floor(totalMonths / 12);
+  const months = totalMonths % 12;
+
+  if (years > 0 && months > 0) {
+    return `${years} yr${years > 1 ? "s" : ""} ${months} mo`;
+  }
+  if (years > 0) {
+    return `${years} yr${years > 1 ? "s" : ""}`;
+  }
+  return `${months} mo`;
+};
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: items.map((job, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Role",
+      roleName: job.role,
+      startDate: toIsoDate(job.start),
+      ...(job.end !== "Present" ? { endDate: toIsoDate(job.end) } : {}),
+      employmentType: job.employmentType,
+      worksFor: {
+        "@type": "Organization",
+        name: job.company,
+      },
+      jobLocation: {
+        "@type": "Place",
+        name: job.location,
+      },
+      description: job.achievements.join(" "),
+      skills: job.technologies.join(", "),
+    },
+  })),
+};
+---
+
+<section class="experience stack" id={id} aria-labelledby={`${id}-title`}>
+  <div class="section-header cluster">
+    <h2 id={`${id}-title`}>{heading}</h2>
+    <span class="tag" aria-label={`${items.length} roles listed`}>
+      {items.length} role{items.length === 1 ? "" : "s"}
+    </span>
+  </div>
+
+  {
+    items.length > 0 ? (
+      <ol class="timeline" role="list" itemprop="itemListElement">
+        {items.map((job, index) => (
+          <li
+            class="timeline-item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            <meta itemprop="position" content={String(index + 1)} />
+            <article
+              class="timeline-card card"
+              itemprop="item"
+              itemscope
+              itemtype="https://schema.org/Role"
+            >
+              <header class="job-header">
+                <p class="job-meta cluster">
+                  <span class="tag" itemprop="employmentType">
+                    {job.employmentType}
+                  </span>
+                  <span class="date-range">
+                    <time datetime={toIsoDate(job.start)} itemprop="startDate">
+                      {formatMonthYear(job.start)}
+                    </time>
+                    <span aria-hidden="true">—</span>
+                    {job.end === "Present" ? (
+                      <span itemprop="endDate" aria-label="Current role">
+                        Present
+                      </span>
+                    ) : (
+                      <time datetime={toIsoDate(job.end)} itemprop="endDate">
+                        {formatMonthYear(job.end)}
+                      </time>
+                    )}
+                  </span>
+                  <span class="duration">{formatDuration(job.start, job.end)}</span>
+                </p>
+
+                <h3 class="job-role" itemprop="roleName">
+                  {job.role}
+                </h3>
+
+                <p class="job-company">
+                  <span itemprop="worksFor" itemscope itemtype="https://schema.org/Organization">
+                    <span itemprop="name">{job.company}</span>
+                  </span>
+                  <span aria-hidden="true"> · </span>
+                  <span itemprop="jobLocation" itemscope itemtype="https://schema.org/Place">
+                    <span itemprop="name">{job.location}</span>
+                  </span>
+                </p>
+              </header>
+
+              {job.achievements.length > 0 && (
+                <ul class="achievements">
+                  {job.achievements.map((achievement) => (
+                    <li>
+                      <span itemprop="description">{achievement}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {job.technologies.length > 0 && (
+                <div class="tech-stack cluster" aria-label="Technologies used">
+                  {job.technologies.map((tech) => (
+                    <span class="tag">{tech}</span>
+                  ))}
+                </div>
+              )}
+            </article>
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <p class="empty-state">No experience entries available yet.</p>
+    )
+  }
+
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
+</section>
+
+<style>
+  .section-header {
+    justify-content: space-between;
+  }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .timeline-item {
+    position: relative;
+  }
+
+  .job-header {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .job-meta {
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .date-range {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .duration {
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .job-role {
+    margin: 0;
+  }
+
+  .job-company {
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .achievements {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .tech-stack {
+    margin-top: 1rem;
+  }
+
+  .empty-state {
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  @media (min-width: 58rem) {
+    .timeline {
+      gap: 1.25rem;
+    }
+  }
+</style>

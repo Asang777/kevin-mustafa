@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say voice="alice" language="id-ID">Halo, ini saya dari produk xyz mau menawarkan sesuatu ke Anda</Say>
+</Response>

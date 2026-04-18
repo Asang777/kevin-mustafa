@@ -1,0 +1,295 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import ExperienceTimeline from "../components/ExperienceTimeline.astro";
+import profile from "../data/profile";
+import "../styles/global.css";
+
+const pageTitle = profile.seo.title;
+const pageDescription = profile.seo.description;
+const publishedTime = "2024-08-01T00:00:00.000Z";
+const modifiedTime = new Date().toISOString();
+
+const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item.technologies))];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  image={profile.identity.avatar}
+  type="profile"
+  publishedTime={publishedTime}
+  modifiedTime={modifiedTime}
+>
+  <SiteHeader slot="header" />
+
+  <div class="page" id="top">
+    <section class="container hero" id="about" aria-labelledby="hero-title">
+      <article class="card hero-content">
+        <p class="eyebrow">{profile.identity.location}</p>
+        <h1 id="hero-title">{profile.identity.headline}</h1>
+        <p class="intro">{profile.summary}</p>
+
+        <div class="cluster actions">
+          <a class="button button-primary" href={`mailto:${profile.identity.email}`}>Email Kevin</a>
+          <a class="button button-secondary" href="#experience">View Experience</a>
+        </div>
+
+        <ul class="stat-grid" aria-label="Profile highlights">
+          <li class="card stat">
+            <strong>{profile.experience.length}</strong>
+            <span>Professional Roles</span>
+          </li>
+          <li class="card stat">
+            <strong>{uniqueTechnologies.length}+</strong>
+            <span>Technologies</span>
+          </li>
+          <li class="card stat">
+            <strong>{profile.education.length}</strong>
+            <span>Academic Degrees</span>
+          </li>
+        </ul>
+      </article>
+
+      <aside class="card profile-aside" aria-label="Contact summary">
+        <img
+          src={profile.identity.avatar}
+          alt={`Portrait of ${profile.identity.fullName}`}
+          width="400"
+          height="400"
+          loading="eager"
+          decoding="async"
+          class="avatar"
+        />
+        <h2>{profile.identity.fullName}</h2>
+        <p>{profile.identity.availability}</p>
+        <ul class="contact-list">
+          {
+            profile.contacts.map((contact) => (
+              <li>
+                <span>{contact.label}</span>
+                {contact.href ? <a href={contact.href}>{contact.value}</a> : <strong>{contact.value}</strong>}
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </section>
+
+    <section class="container section stack" aria-labelledby="highlights-title">
+      <h2 id="highlights-title">Professional Highlights</h2>
+      <ul class="highlight-list">
+        {profile.highlights.map((item) => <li class="card">{item}</li>)}
+      </ul>
+    </section>
+
+    <section class="container section stack" aria-labelledby="strengths-title">
+      <h2 id="strengths-title">Core Strengths</h2>
+      <ul class="tag-list">
+        {profile.coreStrengths.map((strength) => <li class="tag">{strength}</li>)}
+      </ul>
+    </section>
+
+    <div class="container section">
+      <ExperienceTimeline id="experience" heading="Experience" items={profile.experience} />
+    </div>
+
+    <section class="container section stack" id="skills" aria-labelledby="skills-title">
+      <h2 id="skills-title">Skills</h2>
+      <div class="skills-grid">
+        {
+          profile.skills.map((group) => (
+            <article class="card">
+              <h3>{group.category}</h3>
+              <ul class="skill-list">
+                {group.skills.map((skill) => <li>{skill}</li>)}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container section stack" id="education" aria-labelledby="education-title">
+      <h2 id="education-title">Education</h2>
+      <div class="education-grid">
+        {
+          profile.education.map((item) => (
+            <article class="card">
+              <h3>{item.degree}</h3>
+              <p>{item.institution}</p>
+              <p><small>Graduated {item.graduationYear}</small></p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container section stack contact-section" id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Let’s Build Something Great</h2>
+      <p>
+        If you need an engineer who can build product features and maintain reliable infrastructure, you can reach Kevin directly.
+      </p>
+
+      <div class="cluster">
+        <a class="button button-primary" href={`mailto:${profile.identity.email}`}>{profile.identity.email}</a>
+        {
+          profile.socials.map((social) => (
+            <a class="button button-secondary" href={social.href} target="_blank" rel="noopener noreferrer">
+              {social.platform}
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block: var(--space-8) var(--space-12);
+  }
+
+  .section {
+    margin-top: var(--space-12);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .hero-content {
+    padding: clamp(var(--space-5), 2.5vw, var(--space-8));
+  }
+
+  .eyebrow {
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .intro {
+    margin-top: var(--space-4);
+    font-size: var(--text-md);
+  }
+
+  .actions {
+    margin-top: var(--space-6);
+  }
+
+  .stat-grid {
+    margin-top: var(--space-6);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+  }
+
+  .stat {
+    text-align: center;
+    padding: var(--space-4);
+    box-shadow: none;
+  }
+
+  .stat strong {
+    display: block;
+    font-size: var(--text-xl);
+    color: var(--text);
+  }
+
+  .profile-aside {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .avatar {
+    width: 100%;
+    max-width: 20rem;
+    border-radius: 1rem;
+    border: 1px solid var(--line);
+  }
+
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .contact-list li {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .contact-list span {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .highlight-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tag-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .education-grid,
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .skill-list {
+    padding-left: 1.1rem;
+    margin-top: var(--space-3);
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .contact-section {
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 64rem) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+
+    .profile-aside {
+      order: -1;
+    }
+
+    .highlight-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .stat-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .education-grid,
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

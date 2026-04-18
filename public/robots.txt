@@ -1,0 +1,12 @@
+# robots.txt for kevin-mustafa.com
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /drafts/
+Disallow: /tmp/
+Disallow: /api/
+Disallow: /*?*
+
+Sitemap: https://kevin-mustafa.com/sitemap.xml

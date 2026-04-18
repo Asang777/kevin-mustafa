@@ -1,0 +1,149 @@
+---
+import profile from "@/data/profile";
+
+const navItems = [
+  { href: "#about", label: "About" },
+  { href: "#experience", label: "Experience" },
+  { href: "#skills", label: "Skills" },
+  { href: "#education", label: "Education" },
+  { href: "#contact", label: "Contact" },
+];
+
+const contactHref = `mailto:${profile.identity.email}?subject=Let's%20build%20something%20great`;
+---
+
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Go to homepage">
+      <span class="brand-name">{profile.identity.fullName}</span>
+      <span class="brand-role">{profile.identity.headline}</span>
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <ul class="nav-list" role="list">
+        {
+          navItems.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="button button-primary cta" href={contactHref} aria-label="Contact Kevin Mustafa via email">
+      Let's Talk
+    </a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg), transparent 15%);
+    backdrop-filter: blur(10px);
+  }
+
+  .header-inner {
+    min-height: 4.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 0.75rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    flex-direction: column;
+    text-decoration: none;
+    line-height: 1.15;
+  }
+
+  .brand-name {
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+  }
+
+  .brand-role {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .primary-nav {
+    justify-self: center;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-list a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.25rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  .nav-list a:hover,
+  .nav-list a:focus-visible {
+    color: var(--text);
+    background: var(--surface-muted);
+  }
+
+  .cta {
+    white-space: nowrap;
+    font-size: 0.9rem;
+    padding: 0.62rem 0.95rem;
+  }
+
+  @media (max-width: 60rem) {
+    .header-inner {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "brand cta"
+        "nav nav";
+      row-gap: 0.65rem;
+    }
+
+    .brand {
+      grid-area: brand;
+    }
+
+    .primary-nav {
+      grid-area: nav;
+      justify-self: start;
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding-bottom: 0.1rem;
+    }
+
+    .cta {
+      grid-area: cta;
+      justify-self: end;
+    }
+
+    .nav-list {
+      width: max-content;
+    }
+  }
+</style>

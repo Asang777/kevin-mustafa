@@ -1,0 +1,40 @@
+# Dependencies
+node_modules
+.pnpm-store
+.npm
+.yarn
+.yarn-cache
+.yarnrc.yml
+
+# Build output
+dist
+.astro
+coverage
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Editor / OS
+.DS_Store
+.vscode
+.idea
+
+# VCS / metadata
+.git
+.gitignore
+.gitattributes
+
+# Legacy static site folder (not needed for Astro build)
+website
+
+# Docs and misc
+README.md
