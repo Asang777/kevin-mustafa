@@ -47,9 +47,11 @@ const contactHref = `mailto:${profile.identity.email}?subject=Let's%20build%20so
     position: sticky;
     top: 0;
     z-index: 60;
-    border-bottom: 1px solid var(--line);
-    background: color-mix(in oklab, var(--bg), transparent 15%);
-    backdrop-filter: blur(10px);
+    border-bottom: 1px solid color-mix(in oklab, var(--line), transparent 60%);
+    background: color-mix(in oklab, var(--surface), transparent 35%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
 
   .header-inner {

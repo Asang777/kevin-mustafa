@@ -157,7 +157,7 @@ const jsonLd = {
     <meta name="description" content={description} />
     {mergedKeywords.length > 0 && <meta name="keywords" content={mergedKeywords.join(", ")} />}
     <meta name="robots" content={robots} />
-    <meta name="theme-color" content="#0b1220" />
+    <meta name="theme-color" content="#030712" />
     <meta name="author" content="Kevin Mustafa" />
 
     <title>{pageTitle}</title>
@@ -168,6 +168,11 @@ const jsonLd = {
     <link rel="icon" href="/apple-touch-icon.png" type="image/png" sizes="180x180" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="manifest" href="/site.webmanifest" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     {
       preconnectList.map((origin) => (
         <link rel="dns-prefetch" href={origin} />
@@ -220,6 +225,11 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
+    <div class="ambient-background" aria-hidden="true">
+      <div class="glow-orb orb-1"></div>
+      <div class="glow-orb orb-2"></div>
+      <div class="glow-orb orb-3"></div>
+    </div>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <slot name="header" />
     <main id="main-content">
@@ -242,6 +252,47 @@ const jsonLd = {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg);
+  }
+
+  /* Ambient Background Orbs */
+  .ambient-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--bg);
+  }
+
+  .orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, color-mix(in oklab, var(--primary), transparent 85%) 0%, transparent 70%);
+    top: -100px;
+    left: -200px;
+  }
+
+  .orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, color-mix(in oklab, var(--accent), transparent 88%) 0%, transparent 70%);
+    bottom: 20%;
+    right: -150px;
+    animation-delay: 2s;
+  }
+
+  .orb-3 {
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, color-mix(in oklab, var(--primary-soft), transparent 90%) 0%, transparent 70%);
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -3s;
   }
 
   .skip-link {
@@ -249,9 +300,9 @@ const jsonLd = {
     left: -9999px;
     top: 0;
     z-index: 1000;
-    background: #ffffff;
-    color: #0b1220;
-    border: 2px solid #0b1220;
+    background: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--primary);
     border-radius: 8px;
     padding: 0.5rem 0.75rem;
     font-weight: 600;
