@@ -6,12 +6,104 @@ import ExperienceTimeline from "../components/ExperienceTimeline.astro";
 import profile from "../data/profile";
 import "../styles/global.css";
 
-const pageTitle = profile.seo.title;
-const pageDescription = profile.seo.description;
+const pageTitle = "Kevin Mustafa | Fullstack Developer & DevOps Engineer";
+const pageDescription =
+  "Explore Kevin Mustafa's profile, featured project themes, delivery approach, and expertise in fullstack engineering, DevOps, and AWS cloud infrastructure.";
 const publishedTime = "2024-08-01T00:00:00.000Z";
 const modifiedTime = new Date().toISOString();
 
 const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item.technologies))];
+
+const valuePropositions = [
+  {
+    title: "Product + Infrastructure Mindset",
+    description:
+      "You get one engineer who can ship product features while keeping systems stable, scalable, and cost-efficient.",
+  },
+  {
+    title: "Execution Speed with Reliability",
+    description:
+      "From architecture to deployment, every phase is designed for maintainability, observability, and long-term growth.",
+  },
+  {
+    title: "Business-Focused Engineering",
+    description:
+      "Technical decisions are aligned with outcomes: faster releases, better user experience, and reduced operational risk.",
+  },
+];
+
+const featuredProjects = [
+  {
+    title: "Freelance Fullstack Delivery",
+    impact:
+      "Delivered end-to-end web solutions from requirement alignment, implementation, CI/CD setup, to production deployment.",
+    stack: ["TypeScript", "React", "Node.js", "Docker", "PostgreSQL"],
+    cta: "Discuss Similar Build",
+    href: "#contact",
+  },
+  {
+    title: "AWS Infrastructure Operations",
+    impact:
+      "Managed cloud environments with deployment automation, improved consistency, and stronger operational responsiveness.",
+    stack: ["AWS", "Linux", "Nginx", "CI/CD", "Monitoring"],
+    cta: "View Experience",
+    href: "#experience",
+  },
+  {
+    title: "Dashboard & Frontend Engineering",
+    impact:
+      "Built interactive dashboard modules and frontend interfaces optimized for performance and smooth user workflows.",
+    stack: ["React", "TypeScript", "JavaScript", "HTML5 Canvas", "CSS"],
+    cta: "See Skill Coverage",
+    href: "#skills",
+  },
+];
+
+const processSteps = [
+  {
+    title: "1. Discovery & Scope",
+    detail:
+      "Clarify goals, constraints, timeline, and success metrics to ensure architecture aligns with business outcomes.",
+  },
+  {
+    title: "2. Build & Validate",
+    detail:
+      "Develop with clean structure, performance-first implementation, and iterative validation against real use cases.",
+  },
+  {
+    title: "3. Deploy & Optimize",
+    detail:
+      "Ship through repeatable pipelines, monitor behavior, and continuously optimize reliability and user experience.",
+  },
+];
+
+const faqItems = [
+  {
+    q: "What kind of projects can Kevin help with?",
+    a: "Web platforms, dashboards, fullstack product development, and cloud infrastructure improvement using practical engineering strategies.",
+  },
+  {
+    q: "Is Kevin available for remote work?",
+    a: "Yes. Kevin is open to remote and freelance opportunities with teams that value ownership, quality, and delivery speed.",
+  },
+  {
+    q: "How does Kevin approach SEO and performance?",
+    a: "By prioritizing semantic structure, content clarity, technical metadata, accessibility, and Core Web Vitals from the foundation.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
+};
 ---
 
 <BaseLayout
@@ -21,38 +113,39 @@ const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item
   type="profile"
   publishedTime={publishedTime}
   modifiedTime={modifiedTime}
+  keywords={profile.seo.keywords}
 >
   <SiteHeader slot="header" />
 
-  <div class="page" id="top">
+  <div id="top" class="page">
     <section class="container hero" id="about" aria-labelledby="hero-title">
-      <article class="card hero-content">
+      <article class="card hero-content reveal" data-reveal>
         <p class="eyebrow">{profile.identity.location}</p>
         <h1 id="hero-title">{profile.identity.headline}</h1>
         <p class="intro">{profile.summary}</p>
 
         <div class="cluster actions">
           <a class="button button-primary" href={`mailto:${profile.identity.email}`}>Email Kevin</a>
-          <a class="button button-secondary" href="#experience">View Experience</a>
+          <a class="button button-secondary" href="#projects">View Featured Work</a>
         </div>
 
         <ul class="stat-grid" aria-label="Profile highlights">
-          <li class="card stat">
+          <li class="card stat reveal" data-reveal style="--reveal-delay: 40ms;">
             <strong>{profile.experience.length}</strong>
             <span>Professional Roles</span>
           </li>
-          <li class="card stat">
+          <li class="card stat reveal" data-reveal style="--reveal-delay: 80ms;">
             <strong>{uniqueTechnologies.length}+</strong>
             <span>Technologies</span>
           </li>
-          <li class="card stat">
+          <li class="card stat reveal" data-reveal style="--reveal-delay: 120ms;">
             <strong>{profile.education.length}</strong>
             <span>Academic Degrees</span>
           </li>
         </ul>
       </article>
 
-      <aside class="card profile-aside" aria-label="Contact summary">
+      <aside class="card profile-aside reveal" data-reveal style="--reveal-delay: 80ms;" aria-label="Contact summary">
         <img
           src={profile.identity.avatar}
           alt={`Portrait of ${profile.identity.fullName}`}
@@ -77,30 +170,72 @@ const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item
       </aside>
     </section>
 
-    <section class="container section stack" aria-labelledby="highlights-title">
-      <h2 id="highlights-title">Professional Highlights</h2>
-      <ul class="highlight-list">
-        {profile.highlights.map((item) => <li class="card">{item}</li>)}
-      </ul>
+    <section class="container section stack" aria-labelledby="value-title">
+      <h2 id="value-title" class="reveal" data-reveal>Why Work With Kevin</h2>
+      <div class="value-grid">
+        {
+          valuePropositions.map((item, index) => (
+            <article class="card value-card reveal" data-reveal style={`--reveal-delay: ${(index + 1) * 60}ms;`}>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container section stack" id="projects" aria-labelledby="projects-title">
+      <h2 id="projects-title" class="reveal" data-reveal>Featured Project Themes</h2>
+      <p class="section-lead reveal" data-reveal style="--reveal-delay: 40ms;">
+        Representative delivery focus across recent roles, combining product engineering with dependable operations.
+      </p>
+      <div class="projects-grid">
+        {
+          featuredProjects.map((project, index) => (
+            <article class="card project-card reveal" data-reveal style={`--reveal-delay: ${(index + 1) * 80}ms;`}>
+              <h3>{project.title}</h3>
+              <p>{project.impact}</p>
+              <ul class="cluster tech-list" aria-label={`${project.title} technology stack`}>
+                {project.stack.map((tech) => <li class="tag">{tech}</li>)}
+              </ul>
+              <a class="project-link" href={project.href}>{project.cta} →</a>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container section stack" aria-labelledby="process-title">
+      <h2 id="process-title" class="reveal" data-reveal>Delivery Process</h2>
+      <ol class="process-grid">
+        {
+          processSteps.map((step, index) => (
+            <li class="card process-item reveal" data-reveal style={`--reveal-delay: ${(index + 1) * 70}ms;`}>
+              <h3>{step.title}</h3>
+              <p>{step.detail}</p>
+            </li>
+          ))
+        }
+      </ol>
     </section>
 
     <section class="container section stack" aria-labelledby="strengths-title">
-      <h2 id="strengths-title">Core Strengths</h2>
-      <ul class="tag-list">
+      <h2 id="strengths-title" class="reveal" data-reveal>Core Strengths</h2>
+      <ul class="tag-list reveal" data-reveal style="--reveal-delay: 40ms;">
         {profile.coreStrengths.map((strength) => <li class="tag">{strength}</li>)}
       </ul>
     </section>
 
-    <div class="container section">
+    <div class="container section reveal" data-reveal>
       <ExperienceTimeline id="experience" heading="Experience" items={profile.experience} />
     </div>
 
     <section class="container section stack" id="skills" aria-labelledby="skills-title">
-      <h2 id="skills-title">Skills</h2>
+      <h2 id="skills-title" class="reveal" data-reveal>Skills</h2>
       <div class="skills-grid">
         {
-          profile.skills.map((group) => (
-            <article class="card">
+          profile.skills.map((group, index) => (
+            <article class="card reveal" data-reveal style={`--reveal-delay: ${(index + 1) * 45}ms;`}>
               <h3>{group.category}</h3>
               <ul class="skill-list">
                 {group.skills.map((skill) => <li>{skill}</li>)}
@@ -112,11 +247,11 @@ const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item
     </section>
 
     <section class="container section stack" id="education" aria-labelledby="education-title">
-      <h2 id="education-title">Education</h2>
+      <h2 id="education-title" class="reveal" data-reveal>Education</h2>
       <div class="education-grid">
         {
-          profile.education.map((item) => (
-            <article class="card">
+          profile.education.map((item, index) => (
+            <article class="card reveal" data-reveal style={`--reveal-delay: ${(index + 1) * 70}ms;`}>
               <h3>{item.degree}</h3>
               <p>{item.institution}</p>
               <p><small>Graduated {item.graduationYear}</small></p>
@@ -126,13 +261,27 @@ const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item
       </div>
     </section>
 
+    <section class="container section stack" id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="reveal" data-reveal>Frequently Asked Questions</h2>
+      <div class="faq-list">
+        {
+          faqItems.map((item, index) => (
+            <details class="card faq-item reveal" data-reveal style={`--reveal-delay: ${(index + 1) * 60}ms;`}>
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
     <section class="container section stack contact-section" id="contact" aria-labelledby="contact-title">
-      <h2 id="contact-title">Let’s Build Something Great</h2>
-      <p>
+      <h2 id="contact-title" class="reveal" data-reveal>Let’s Build Something Great</h2>
+      <p class="reveal" data-reveal style="--reveal-delay: 30ms;">
         If you need an engineer who can build product features and maintain reliable infrastructure, you can reach Kevin directly.
       </p>
 
-      <div class="cluster">
+      <div class="cluster reveal" data-reveal style="--reveal-delay: 60ms;">
         <a class="button button-primary" href={`mailto:${profile.identity.email}`}>{profile.identity.email}</a>
         {
           profile.socials.map((social) => (
@@ -146,15 +295,51 @@ const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item
   </div>
 
   <SiteFooter slot="footer" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
 </BaseLayout>
+
+<script is:inline>
+  if (typeof window !== "undefined") {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const revealElements = document.querySelectorAll("[data-reveal]");
+
+    if (reduceMotion) {
+      revealElements.forEach((el) => el.classList.add("is-visible"));
+    } else if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.14, rootMargin: "0px 0px -8% 0px" }
+      );
+
+      revealElements.forEach((el) => observer.observe(el));
+    } else {
+      revealElements.forEach((el) => el.classList.add("is-visible"));
+    }
+  }
+</script>
 
 <style>
   .page {
     padding-block: var(--space-8) var(--space-12);
+    background:
+      radial-gradient(900px 350px at 10% -10%, color-mix(in oklab, var(--primary-soft), transparent 35%), transparent 70%),
+      radial-gradient(900px 350px at 100% -10%, color-mix(in oklab, var(--primary-soft), transparent 45%), transparent 72%);
   }
 
   .section {
     margin-top: var(--space-12);
+  }
+
+  .section-lead {
+    font-size: var(--text-md);
   }
 
   .hero {
@@ -234,12 +419,64 @@ const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item
     font-size: var(--text-sm);
   }
 
-  .highlight-list {
-    list-style: none;
-    padding: 0;
+  .value-grid,
+  .projects-grid,
+  .skills-grid,
+  .education-grid {
     display: grid;
     gap: var(--space-4);
+  }
+
+  .value-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .skills-grid,
+  .education-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .value-card h3,
+  .project-card h3 {
+    margin-bottom: var(--space-3);
+  }
+
+  .project-card {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .tech-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .project-link {
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .project-link:hover {
+    text-decoration: underline;
+  }
+
+  .process-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .process-item h3 {
+    margin-bottom: var(--space-3);
   }
 
   .tag-list {
@@ -250,13 +487,6 @@ const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item
     gap: var(--space-3);
   }
 
-  .education-grid,
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
-  }
-
   .skill-list {
     padding-left: 1.1rem;
     margin-top: var(--space-3);
@@ -264,8 +494,65 @@ const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item
     gap: var(--space-2);
   }
 
+  .faq-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--text);
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: "+";
+    float: right;
+    color: var(--primary);
+    font-weight: 800;
+  }
+
+  .faq-item[open] summary::after {
+    content: "–";
+  }
+
+  .faq-item p {
+    margin-top: var(--space-3);
+  }
+
   .contact-section {
     margin-bottom: var(--space-12);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 72rem) {
+    .value-grid,
+    .projects-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 64rem) {
@@ -276,20 +563,23 @@ const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item
     .profile-aside {
       order: -1;
     }
+  }
 
-    .highlight-list {
+  @media (max-width: 48rem) {
+    .stat-grid,
+    .value-grid,
+    .projects-grid,
+    .education-grid,
+    .skills-grid {
       grid-template-columns: 1fr;
     }
   }
 
-  @media (max-width: 48rem) {
-    .stat-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .education-grid,
-    .skills-grid {
-      grid-template-columns: 1fr;
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
   }
 </style>

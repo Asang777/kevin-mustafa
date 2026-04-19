@@ -33,6 +33,23 @@ export type SkillCategory = {
   skills: string[];
 };
 
+export type FeaturedProject = {
+  name: string;
+  tagline: string;
+  summary: string;
+  impact: string;
+  role: string;
+  stack: string[];
+  link?: string;
+};
+
+export type StoryTimelineItem = {
+  year: string;
+  title: string;
+  narrative: string;
+  milestone: string;
+};
+
 export type ProfileData = {
   seo: {
     title: string;
@@ -56,6 +73,8 @@ export type ProfileData = {
   experience: ExperienceItem[];
   education: EducationItem[];
   skills: SkillCategory[];
+  featuredProjects: FeaturedProject[];
+  storyTimeline: StoryTimelineItem[];
   highlights: string[];
 };
 
@@ -174,7 +193,13 @@ export const profile: ProfileData = {
         "Developed game-related frontend modules using canvas-based rendering.",
         "Collaborated with product and backend teams for high-quality releases.",
       ],
-      technologies: ["TypeScript", "React", "HTML5 Canvas", "JavaScript", "CSS"],
+      technologies: [
+        "TypeScript",
+        "React",
+        "HTML5 Canvas",
+        "JavaScript",
+        "CSS",
+      ],
     },
     {
       role: "Fullstack IT Project Manager",
@@ -285,6 +310,78 @@ export const profile: ProfileData = {
         "Problem Solving",
         "Creative & Critical Thinking",
       ],
+    },
+  ],
+
+  featuredProjects: [
+    {
+      name: "Cloud-Native Product Delivery Platform",
+      tagline: "From architecture to release with reliability-first DevOps",
+      summary:
+        "Designed and shipped a fullstack delivery platform with automated build, test, and deployment workflows for distributed teams.",
+      impact:
+        "Reduced deployment friction and improved release confidence with consistent CI/CD standards and operational visibility.",
+      role: "Fullstack Developer & DevOps Engineer",
+      stack: ["TypeScript", "React", "Node.js", "Docker", "AWS", "PostgreSQL"],
+    },
+    {
+      name: "Interactive Operations Dashboard",
+      tagline:
+        "Real-time frontend visibility for product and infrastructure teams",
+      summary:
+        "Built modular dashboard interfaces to track service health, release status, and key business metrics in one place.",
+      impact:
+        "Enabled faster decision-making and better cross-team collaboration through clear, actionable visual reporting.",
+      role: "Frontend Developer",
+      stack: ["React", "TypeScript", "HTML5 Canvas", "CSS", "REST APIs"],
+    },
+    {
+      name: "Enterprise Backoffice Modernization",
+      tagline: "Operational systems that improve HR and payroll workflows",
+      summary:
+        "Contributed to internal systems modernization by improving reliability, usability, and data consistency across core workflows.",
+      impact:
+        "Helped teams reduce manual processing overhead and increased day-to-day operational efficiency.",
+      role: "Application Developer",
+      stack: ["JavaScript", "SQL", "Enterprise Systems", "Linux"],
+    },
+  ],
+
+  storyTimeline: [
+    {
+      year: "2015",
+      title: "Started Enterprise Engineering Journey",
+      narrative:
+        "Entered professional software engineering through enterprise internal systems, building strong foundations in structured delivery and stakeholder communication.",
+      milestone: "Shipped business-critical HR/payroll features",
+    },
+    {
+      year: "2017",
+      title: "Expanded into Fullstack Product Development",
+      narrative:
+        "Moved from internal systems to broader product responsibilities, combining frontend and backend implementation while improving system reliability.",
+      milestone: "Owned cross-layer feature delivery from UI to server",
+    },
+    {
+      year: "2020",
+      title: "Led Remote Projects Across Regions",
+      narrative:
+        "Took on project leadership and remote execution responsibilities, aligning engineering outcomes with product and business priorities.",
+      milestone: "Coordinated fullstack initiatives for distributed teams",
+    },
+    {
+      year: "2023",
+      title: "Deepened DevOps and Cloud Operations",
+      narrative:
+        "Focused on AWS infrastructure, deployment automation, and observability to improve uptime, release consistency, and operational readiness.",
+      milestone: "Standardized CI/CD and cloud deployment workflows",
+    },
+    {
+      year: "2024",
+      title: "Independent Fullstack + DevOps Delivery",
+      narrative:
+        "Brought product engineering and infrastructure expertise together in freelance engagements, delivering end-to-end solutions with measurable outcomes.",
+      milestone: "Delivered complete build-to-production ownership",
     },
   ],
 
