@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Kevin Mustafa — Fullstack Developer &amp; DevOps Engineer</title>
+  <desc id="desc">Open Graph preview image for kevin-mustafa.com showcasing Kevin Mustafa's profile and expertise in fullstack development, DevOps, and AWS cloud infrastructure.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="50%" stop-color="#13223d"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+
+    <radialGradient id="glowA" cx="0.18" cy="0.12" r="0.6">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="glowB" cx="0.92" cy="0.92" r="0.55">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#020617" flood-opacity="0.35"/>
+    </filter>
+
+    <linearGradient id="pillStroke" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#93c5fd"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glowA)"/>
+  <rect width="1200" height="630" fill="url(#glowB)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.12">
+    <path d="M0 90H1200M0 180H1200M0 270H1200M0 360H1200M0 450H1200M0 540H1200" stroke="#bfdbfe" stroke-width="1"/>
+    <path d="M120 0V630M240 0V630M360 0V630M480 0V630M600 0V630M720 0V630M840 0V630M960 0V630M1080 0V630" stroke="#bfdbfe" stroke-width="1"/>
+  </g>
+
+  <!-- Main content panel -->
+  <g filter="url(#softShadow)">
+    <rect x="64" y="64" width="1072" height="502" rx="28" fill="#0f172a" fill-opacity="0.72" stroke="#60a5fa" stroke-opacity="0.35"/>
+  </g>
+
+  <!-- Brand badge -->
+  <g transform="translate(108,108)">
+    <rect x="0" y="0" width="76" height="76" rx="18" fill="#1d4ed8"/>
+    <path d="M20 58V18h12c12.8 0 22 8.1 22 20s-9.2 20-22 20H20zm10-9h2.7c7.2 0 11.2-4.6 11.2-11s-4-11-11.2-11H30v22z" fill="#e0f2fe"/>
+  </g>
+
+  <!-- Headline text -->
+  <g font-family="Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif" fill="#e5edf7">
+    <text x="206" y="146" font-size="30" font-weight="600" opacity="0.92">kevin-mustafa.com</text>
+    <text x="108" y="244" font-size="66" font-weight="800" letter-spacing="-1.2">Kevin Mustafa</text>
+    <text x="108" y="304" font-size="34" font-weight="600" fill="#93c5fd">Fullstack Developer &amp; DevOps Engineer</text>
+    <text x="108" y="356" font-size="25" font-weight="500" fill="#cbd5e1">Building reliable products, cloud infrastructure, and performant web experiences.</text>
+  </g>
+
+  <!-- Skill pills -->
+  <g font-family="Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="22" font-weight="600">
+    <g transform="translate(108,410)">
+      <rect x="0" y="0" width="142" height="46" rx="23" fill="#0b1220" stroke="url(#pillStroke)" stroke-width="2"/>
+      <text x="71" y="30" text-anchor="middle" fill="#bae6fd">Astro</text>
+    </g>
+    <g transform="translate(266,410)">
+      <rect x="0" y="0" width="192" height="46" rx="23" fill="#0b1220" stroke="url(#pillStroke)" stroke-width="2"/>
+      <text x="96" y="30" text-anchor="middle" fill="#bae6fd">TypeScript</text>
+    </g>
+    <g transform="translate(474,410)">
+      <rect x="0" y="0" width="126" height="46" rx="23" fill="#0b1220" stroke="url(#pillStroke)" stroke-width="2"/>
+      <text x="63" y="30" text-anchor="middle" fill="#bae6fd">AWS</text>
+    </g>
+    <g transform="translate(616,410)">
+      <rect x="0" y="0" width="164" height="46" rx="23" fill="#0b1220" stroke="url(#pillStroke)" stroke-width="2"/>
+      <text x="82" y="30" text-anchor="middle" fill="#bae6fd">DevOps</text>
+    </g>
+    <g transform="translate(796,410)">
+      <rect x="0" y="0" width="140" height="46" rx="23" fill="#0b1220" stroke="url(#pillStroke)" stroke-width="2"/>
+      <text x="70" y="30" text-anchor="middle" fill="#bae6fd">React</text>
+    </g>
+  </g>
+
+  <!-- Bottom strip -->
+  <rect x="64" y="520" width="1072" height="46" rx="0" fill="#0b1220" fill-opacity="0.62"/>
+  <text x="108" y="550" font-family="Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#cbd5e1">
+    Jakarta, Indonesia • Open for freelance and remote opportunities
+  </text>
+
+  <!-- Decorative code glyphs -->
+  <g fill="#93c5fd" opacity="0.38" font-family="JetBrains Mono, Menlo, Consolas, monospace" font-size="42" font-weight="700">
+    <text x="1014" y="172">&lt;/&gt;</text>
+    <text x="958" y="492">{ }</text>
+  </g>
+</svg>

@@ -1,5 +1,6 @@
 # robots.txt for kevin-mustafa.com
 
+# Global crawling policy
 User-agent: *
 Allow: /
 Disallow: /admin/
@@ -8,5 +9,77 @@ Disallow: /drafts/
 Disallow: /tmp/
 Disallow: /api/
 Disallow: /*?*
+
+# Explicitly allow social preview and icon assets
+Allow: /og-image.png
+Allow: /og-image.svg
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /apple-touch-icon.png
+Allow: /site.webmanifest
+Allow: /llms.txt
+Allow: /humans.txt
+Allow: /icons/
+
+# Social bots (Open Graph / card unfurlers)
+User-agent: Twitterbot
+Allow: /og-image.png
+Allow: /og-image.svg
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /apple-touch-icon.png
+Allow: /site.webmanifest
+Allow: /icons/
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /og-image.png
+Allow: /og-image.svg
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /apple-touch-icon.png
+Allow: /site.webmanifest
+Allow: /icons/
+Allow: /
+
+User-agent: Facebot
+Allow: /og-image.png
+Allow: /og-image.svg
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /apple-touch-icon.png
+Allow: /site.webmanifest
+Allow: /icons/
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /og-image.png
+Allow: /og-image.svg
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /apple-touch-icon.png
+Allow: /site.webmanifest
+Allow: /icons/
+Allow: /
+
+User-agent: Slackbot
+Allow: /og-image.png
+Allow: /og-image.svg
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /apple-touch-icon.png
+Allow: /site.webmanifest
+Allow: /icons/
+Allow: /
+
+User-agent: Discordbot
+Allow: /og-image.png
+Allow: /og-image.svg
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /apple-touch-icon.png
+Allow: /site.webmanifest
+Allow: /icons/
+Allow: /
 
 Sitemap: https://kevin-mustafa.com/sitemap.xml

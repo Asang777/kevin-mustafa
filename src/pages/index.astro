@@ -8,11 +8,22 @@ import "../styles/global.css";
 
 const pageTitle = "Kevin Mustafa | Fullstack Developer & DevOps Engineer";
 const pageDescription =
-  "Explore Kevin Mustafa's profile, featured project themes, delivery approach, and expertise in fullstack engineering, DevOps, and AWS cloud infrastructure.";
+  "Explore Kevin Mustafa's profile, real projects, delivery approach, and expertise in fullstack engineering, DevOps, and AWS cloud infrastructure.";
 const publishedTime = "2024-08-01T00:00:00.000Z";
 const modifiedTime = new Date().toISOString();
 
+const seoAlternates = [
+  { hreflang: "en", href: "https://kevin-mustafa.com/" },
+  { hreflang: "x-default", href: "https://kevin-mustafa.com/" },
+];
+
 const uniqueTechnologies = [...new Set(profile.experience.flatMap((item) => item.technologies))];
+
+const heroStats = [
+  { value: profile.experience.length, suffix: "", label: "Professional Roles" },
+  { value: uniqueTechnologies.length, suffix: "+", label: "Technologies" },
+  { value: profile.education.length, suffix: "", label: "Academic Degrees" },
+];
 
 const valuePropositions = [
   {
@@ -32,32 +43,21 @@ const valuePropositions = [
   },
 ];
 
-const featuredProjects = [
-  {
-    title: "Freelance Fullstack Delivery",
+const projectList = [...profile.featuredProjects];
+const hasSiberind = projectList.some((p) => (p.link || "").includes("siberind.com"));
+if (!hasSiberind) {
+  projectList.unshift({
+    name: "Siberind",
+    tagline: "Digital presence and technology solutions platform",
+    summary:
+      "Built and launched Siberind as a conversion-oriented company profile and lead generation website.",
     impact:
-      "Delivered end-to-end web solutions from requirement alignment, implementation, CI/CD setup, to production deployment.",
-    stack: ["TypeScript", "React", "Node.js", "Docker", "PostgreSQL"],
-    cta: "Discuss Similar Build",
-    href: "#contact",
-  },
-  {
-    title: "AWS Infrastructure Operations",
-    impact:
-      "Managed cloud environments with deployment automation, improved consistency, and stronger operational responsiveness.",
-    stack: ["AWS", "Linux", "Nginx", "CI/CD", "Monitoring"],
-    cta: "View Experience",
-    href: "#experience",
-  },
-  {
-    title: "Dashboard & Frontend Engineering",
-    impact:
-      "Built interactive dashboard modules and frontend interfaces optimized for performance and smooth user workflows.",
-    stack: ["React", "TypeScript", "JavaScript", "HTML5 Canvas", "CSS"],
-    cta: "See Skill Coverage",
-    href: "#skills",
-  },
-];
+      "Improved trust, discoverability, and client inquiry flow through better UX, messaging clarity, and technical SEO.",
+    role: "Fullstack Developer & DevOps Engineer",
+    stack: ["Astro", "TypeScript", "SEO", "Docker", "Nginx"],
+    link: "https://siberind.com",
+  });
+}
 
 const processSteps = [
   {
@@ -104,16 +104,40 @@ const faqJsonLd = {
     },
   })),
 };
+
+const projectsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Kevin Mustafa Projects",
+  itemListElement: projectList.map((project, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "CreativeWork",
+      name: project.name,
+      description: `${project.tagline}. ${project.summary} ${project.impact}`,
+      url: project.link ?? "https://kevin-mustafa.com/#contact",
+      creator: {
+        "@type": "Person",
+        name: profile.identity.fullName,
+        url: "https://kevin-mustafa.com/",
+      },
+      keywords: project.stack.join(", "),
+    },
+  })),
+};
 ---
 
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
-  image={profile.identity.avatar}
+  image="/og-image.png"
+  imageAlt="Kevin Mustafa — Fullstack Developer & DevOps Engineer"
   type="profile"
   publishedTime={publishedTime}
   modifiedTime={modifiedTime}
-  keywords={profile.seo.keywords}
+  keywords={[...profile.seo.keywords, "portfolio projects", "Siberind", "siberind.com"]}
+  alternates={seoAlternates}
 >
   <SiteHeader slot="header" />
 
@@ -126,22 +150,20 @@ const faqJsonLd = {
 
         <div class="cluster actions">
           <a class="button button-primary" href={`mailto:${profile.identity.email}`}>Email Kevin</a>
-          <a class="button button-secondary" href="#projects">View Featured Work</a>
+          <a class="button button-secondary" href="#projects">View Projects</a>
         </div>
 
         <ul class="stat-grid" aria-label="Profile highlights">
-          <li class="card stat reveal" data-reveal style="--reveal-delay: 40ms;">
-            <strong>{profile.experience.length}</strong>
-            <span>Professional Roles</span>
-          </li>
-          <li class="card stat reveal" data-reveal style="--reveal-delay: 80ms;">
-            <strong>{uniqueTechnologies.length}+</strong>
-            <span>Technologies</span>
-          </li>
-          <li class="card stat reveal" data-reveal style="--reveal-delay: 120ms;">
-            <strong>{profile.education.length}</strong>
-            <span>Academic Degrees</span>
-          </li>
+          {
+            heroStats.map((stat, index) => (
+              <li class="card stat reveal" data-reveal style={`--reveal-delay: ${(index + 1) * 40}ms;`}>
+                <strong>
+                  <span data-counter data-target={String(stat.value)} data-suffix={stat.suffix}>0</span>
+                </strong>
+                <span>{stat.label}</span>
+              </li>
+            ))
+          }
         </ul>
       </article>
 
@@ -152,6 +174,7 @@ const faqJsonLd = {
           width="400"
           height="400"
           loading="eager"
+          fetchpriority="high"
           decoding="async"
           class="avatar"
         />
@@ -185,22 +208,59 @@ const faqJsonLd = {
     </section>
 
     <section class="container section stack" id="projects" aria-labelledby="projects-title">
-      <h2 id="projects-title" class="reveal" data-reveal>Featured Project Themes</h2>
-      <p class="section-lead reveal" data-reveal style="--reveal-delay: 40ms;">
-        Representative delivery focus across recent roles, combining product engineering with dependable operations.
+      <div class="cluster projects-heading-row">
+        <h2 id="projects-title" class="reveal" data-reveal>Real Projects</h2>
+        <span class="tag reveal" data-reveal style="--reveal-delay: 40ms;">{projectList.length} published entries</span>
+      </div>
+
+      <p class="section-lead reveal" data-reveal style="--reveal-delay: 60ms;">
+        Selected work focused on outcomes: performance, reliability, visibility, and business impact.
       </p>
+
       <div class="projects-grid">
         {
-          featuredProjects.map((project, index) => (
-            <article class="card project-card reveal" data-reveal style={`--reveal-delay: ${(index + 1) * 80}ms;`}>
-              <h3>{project.title}</h3>
-              <p>{project.impact}</p>
-              <ul class="cluster tech-list" aria-label={`${project.title} technology stack`}>
-                {project.stack.map((tech) => <li class="tag">{tech}</li>)}
-              </ul>
-              <a class="project-link" href={project.href}>{project.cta} →</a>
-            </article>
-          ))
+          projectList.map((project, index) => {
+            const isExternal = Boolean(project.link && project.link.startsWith("http"));
+            const href = project.link ?? "#contact";
+            const isSiberind = href.includes("siberind.com");
+            const backlinkRel = isSiberind
+              ? "noopener noreferrer external me"
+              : isExternal
+                ? "noopener noreferrer external"
+                : undefined;
+
+            return (
+              <article
+                class={`card project-card project-card-interactive reveal ${isSiberind ? "project-siberind" : ""}`}
+                data-reveal
+                style={`--reveal-delay: ${(index + 1) * 70}ms;`}
+                data-project-card
+              >
+                <header class="project-header">
+                  <p class="project-eyebrow">{project.role}</p>
+                  <h3>{project.name}</h3>
+                  <p class="project-tagline">{project.tagline}</p>
+                </header>
+
+                <p>{project.summary}</p>
+                <p class="project-impact"><strong>Impact:</strong> {project.impact}</p>
+
+                <ul class="cluster tech-list" aria-label={`${project.name} technology stack`}>
+                  {project.stack.map((tech) => <li class="tag">{tech}</li>)}
+                </ul>
+
+                <a
+                  class="project-link"
+                  href={href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={backlinkRel}
+                  title={isSiberind ? "Siberind official website" : undefined}
+                >
+                  {isSiberind ? "Visit Siberind (Live Website) ↗" : "Explore Project ↗"}
+                </a>
+              </article>
+            );
+          })
         }
       </div>
     </section>
@@ -226,7 +286,10 @@ const faqJsonLd = {
       </ul>
     </section>
 
-    <div class="container section reveal" data-reveal>
+    <div class="container section reveal timeline-shell" data-reveal>
+      <div class="timeline-progress" aria-hidden="true">
+        <span class="timeline-progress-fill"></span>
+      </div>
       <ExperienceTimeline id="experience" heading="Experience" items={profile.experience} />
     </div>
 
@@ -297,31 +360,174 @@ const faqJsonLd = {
   <SiteFooter slot="footer" />
 
   <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(projectsJsonLd)} />
 </BaseLayout>
 
 <script is:inline>
   if (typeof window !== "undefined") {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const revealElements = document.querySelectorAll("[data-reveal]");
 
+    // Reveal animations
+    const revealElements = Array.from(document.querySelectorAll("[data-reveal]"));
     if (reduceMotion) {
       revealElements.forEach((el) => el.classList.add("is-visible"));
     } else if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(
+      const revealObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
+              revealObserver.unobserve(entry.target);
             }
           });
         },
         { threshold: 0.14, rootMargin: "0px 0px -8% 0px" }
       );
-
-      revealElements.forEach((el) => observer.observe(el));
+      revealElements.forEach((el) => revealObserver.observe(el));
     } else {
       revealElements.forEach((el) => el.classList.add("is-visible"));
+    }
+
+    // Animated counters
+    const counters = Array.from(document.querySelectorAll("[data-counter]"));
+    const animateCounter = (el) => {
+      const target = Number(el.getAttribute("data-target") || "0");
+      const suffix = el.getAttribute("data-suffix") || "";
+      if (Number.isNaN(target) || target < 0) return;
+
+      const duration = 1200;
+      const start = performance.now();
+
+      const tick = (now) => {
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(target * eased);
+        el.textContent = `${value}${suffix}`;
+
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = `${target}${suffix}`;
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    if (counters.length > 0) {
+      if (reduceMotion || !("IntersectionObserver" in window)) {
+        counters.forEach((el) => {
+          const target = el.getAttribute("data-target") || "0";
+          const suffix = el.getAttribute("data-suffix") || "";
+          el.textContent = `${target}${suffix}`;
+        });
+      } else {
+        const counterObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.4 }
+        );
+        counters.forEach((el) => counterObserver.observe(el));
+      }
+    }
+
+    // Active section observer (scrollspy)
+    const navLinks = Array.from(document.querySelectorAll(".site-header [data-nav-link]"));
+    const sectionPairs = navLinks
+      .map((link) => {
+        const href = link.getAttribute("href");
+        if (!href || !href.startsWith("#")) return null;
+        const section = document.querySelector(href);
+        if (!section) return null;
+        return { href, section };
+      })
+      .filter(Boolean);
+
+    const setActiveLink = (href) => {
+      navLinks.forEach((link) => {
+        const active = link.getAttribute("href") === href;
+        link.classList.toggle("is-active", active);
+        if (active) link.setAttribute("aria-current", "true");
+        else link.removeAttribute("aria-current");
+      });
+    };
+
+    if (sectionPairs.length > 0 && "IntersectionObserver" in window) {
+      let currentHref = window.location.hash && window.location.hash !== "#" ? window.location.hash : sectionPairs[0].href;
+      setActiveLink(currentHref);
+
+      const sectionVisibility = new Map();
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            sectionVisibility.set(entry.target.id, entry.intersectionRatio);
+          });
+
+          let bestHref = currentHref;
+          let bestScore = -1;
+
+          sectionPairs.forEach(({ href, section }) => {
+            const score = sectionVisibility.get(section.id) || 0;
+            if (score > bestScore) {
+              bestScore = score;
+              bestHref = href;
+            }
+          });
+
+          if (bestHref !== currentHref) {
+            currentHref = bestHref;
+            setActiveLink(currentHref);
+          }
+        },
+        { rootMargin: "-25% 0px -55% 0px", threshold: [0.15, 0.3, 0.5, 0.7] }
+      );
+
+      sectionPairs.forEach(({ section }) => sectionObserver.observe(section));
+      window.addEventListener("hashchange", () => {
+        if (window.location.hash) setActiveLink(window.location.hash);
+      });
+    }
+
+    // Timeline progress indicator
+    const timelineShell = document.querySelector(".timeline-shell");
+    const timelineFill = document.querySelector(".timeline-progress-fill");
+
+    if (timelineShell && timelineFill) {
+      const updateTimelineProgress = () => {
+        const rect = timelineShell.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const start = vh * 0.2;
+        const end = rect.height - vh * 0.35;
+        const raw = (start - rect.top) / Math.max(1, end);
+        const progress = Math.min(1, Math.max(0, raw));
+        timelineFill.style.transform = `scaleY(${progress})`;
+      };
+
+      updateTimelineProgress();
+      window.addEventListener("scroll", updateTimelineProgress, { passive: true });
+      window.addEventListener("resize", updateTimelineProgress);
+    }
+
+    // Subtle project card spotlight interaction
+    const projectCards = Array.from(document.querySelectorAll("[data-project-card]"));
+    if (!reduceMotion && projectCards.length > 0) {
+      projectCards.forEach((card) => {
+        card.addEventListener("pointermove", (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width) * 100;
+          const y = ((event.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty("--spot-x", `${x}%`);
+          card.style.setProperty("--spot-y", `${y}%`);
+        });
+
+        card.addEventListener("pointerleave", () => {
+          card.style.setProperty("--spot-x", "50%");
+          card.style.setProperty("--spot-y", "0%");
+        });
+      });
     }
   }
 </script>
@@ -387,6 +593,8 @@ const faqJsonLd = {
     display: block;
     font-size: var(--text-xl);
     color: var(--text);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
   }
 
   .profile-aside {
@@ -419,6 +627,11 @@ const faqJsonLd = {
     font-size: var(--text-sm);
   }
 
+  .projects-heading-row {
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .value-grid,
   .projects-grid,
   .skills-grid,
@@ -449,6 +662,55 @@ const faqJsonLd = {
     display: grid;
     gap: var(--space-4);
     align-content: start;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .project-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: radial-gradient(
+      480px circle at var(--spot-x, 50%) var(--spot-y, 0%),
+      color-mix(in oklab, var(--primary-soft), transparent 30%),
+      transparent 55%
+    );
+    z-index: -1;
+    opacity: 0.75;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  .project-card:hover::before {
+    opacity: 1;
+  }
+
+  .project-siberind {
+    border-color: color-mix(in oklab, var(--primary), var(--line) 60%);
+    box-shadow: var(--shadow-2);
+  }
+
+  .project-header {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .project-eyebrow {
+    margin: 0;
+    color: var(--primary);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  .project-tagline {
+    margin: 0;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .project-impact strong {
+    color: var(--text);
   }
 
   .tech-list {
@@ -460,6 +722,7 @@ const faqJsonLd = {
   .project-link {
     font-weight: 700;
     text-decoration: none;
+    width: fit-content;
   }
 
   .project-link:hover {
@@ -477,6 +740,32 @@ const faqJsonLd = {
 
   .process-item h3 {
     margin-bottom: var(--space-3);
+  }
+
+  .timeline-shell {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .timeline-progress {
+    position: absolute;
+    left: 0.15rem;
+    top: 0;
+    bottom: 0;
+    width: 0.35rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--line), transparent 35%);
+    overflow: hidden;
+  }
+
+  .timeline-progress-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 0.18s linear;
+    background: linear-gradient(180deg, var(--primary), color-mix(in oklab, var(--success), var(--primary) 55%));
   }
 
   .tag-list {
@@ -563,6 +852,14 @@ const faqJsonLd = {
     .profile-aside {
       order: -1;
     }
+
+    .timeline-shell {
+      padding-left: 0;
+    }
+
+    .timeline-progress {
+      display: none;
+    }
   }
 
   @media (max-width: 48rem) {
@@ -573,6 +870,10 @@ const faqJsonLd = {
     .skills-grid {
       grid-template-columns: 1fr;
     }
+
+    .projects-heading-row {
+      align-items: flex-start;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -580,6 +881,10 @@ const faqJsonLd = {
       opacity: 1;
       transform: none;
       transition: none;
+    }
+
+    .project-card::before {
+      display: none;
     }
   }
 </style>

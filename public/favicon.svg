@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Kevin Mustafa Favicon</title>
+  <desc id="desc">Branded KM monogram favicon with modern blue gradient background.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="12" y1="8" x2="44" y2="36" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0B1220" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#bg)"/>
+  <path d="M10 10h44v20C54 18 46 10 34 10z" fill="url(#shine)"/>
+
+  <g fill="#FFFFFF" filter="url(#softShadow)">
+    <path d="M17 18h6v28h-6zM23 31l12-13h8L31 31l13 15h-8z"/>
+    <path d="M41 18h6v28h-6z"/>
+  </g>
+
+  <rect x="2.5" y="2.5" width="59" height="59" rx="13.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.24"/>
+</svg>

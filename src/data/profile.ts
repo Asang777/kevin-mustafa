@@ -96,6 +96,8 @@ export const profile: ProfileData = {
       "Node.js",
       "TypeScript",
       "Personal Website",
+      "Siberind",
+      "siberind.com",
     ],
   },
 
@@ -314,6 +316,17 @@ export const profile: ProfileData = {
   ],
 
   featuredProjects: [
+    {
+      name: "Siberind",
+      tagline: "Digital presence and technology solutions platform",
+      summary:
+        "Built and launched the Siberind website as a high-clarity company profile and lead-generation entry point for digital and IT service offerings.",
+      impact:
+        "Strengthened online credibility, improved discoverability, and created a direct inquiry path for potential clients through a focused service narrative.",
+      role: "Fullstack Developer & DevOps Engineer",
+      stack: ["Astro", "TypeScript", "SEO", "Docker", "Nginx"],
+      link: "https://siberind.com",
+    },
     {
       name: "Cloud-Native Product Delivery Platform",
       tagline: "From architecture to release with reliability-first DevOps",

@@ -1,0 +1,28 @@
+/* TEAM */
+Author: Kevin Mustafa
+Role: Fullstack Developer & DevOps Engineer
+Location: Jakarta, Indonesia
+Contact: kevinmustafa1993@gmail.com
+Website: https://kevin-mustafa.com
+
+/* PROJECT */
+Project Name: kevin-mustafa.com
+Description: Personal profile website focused on engineering credibility, UX quality, and SEO-first implementation.
+Live URL: https://kevin-mustafa.com
+
+/* TECH STACK */
+Frontend: Astro, TypeScript, HTML5, CSS3
+Architecture: Component-based static site generation
+Styling: Custom design system, responsive layout, accessibility-first patterns
+SEO: Structured data (JSON-LD), Open Graph, Twitter Cards, sitemap, robots, canonical + hreflang
+Performance: Optimized images, preload hints, lightweight animations, reduced-motion support
+Deployment: Docker, Nginx (unprivileged runtime), Docker Compose
+
+/* STANDARDS */
+Focus: Core Web Vitals, semantic HTML, accessibility, maintainability
+Compatibility: Modern evergreen browsers
+Content Language: English
+
+/* THANKS */
+Thanks for visiting this profile site.
+If you want to collaborate on product engineering, cloud infrastructure, or SEO-focused web delivery, feel free to reach out.
